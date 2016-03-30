@@ -1,0 +1,385 @@
+## Admin ##
+Code:
+admin_role
+{
+    1 = admin
+}
+
+Order (code gak usah):
+{
+    username, name, email, created_date
+}
+
+Filter (code masuk sini):
+{
+    admin_role (1)
+}
+
+Extra Condition:
+{
+    username = huruf kecil semua, cek duplicate
+    password = jangan dikecilin, md5
+    name = huruf kecil semua, cek duplicate
+    email = huruf kecil semua, cek duplicate, cek valid
+    photo = huruf kecil semua
+    admin_role = integer (default)
+    admin_initial = huruf besar, cek duplicate
+}
+
+==============================================
+## Events ##
+Code:
+status
+{
+    0 = hidden,
+    1 = show
+}
+
+Order (code gak usah):
+{
+    title, date, created_date
+}
+
+Filter (code masuk sini):
+{
+    q (title), status (0, 1)
+}
+
+Extra Condition:
+{
+    id_post = integer
+    title = huruf kecil semua
+    date = s
+    status = integer (default)
+}
+
+==============================================
+## FAQ ##
+Code:
+category
+{
+    1 = website,
+    2 = nic
+}
+type
+{
+    0 = question,
+    1 = answer
+}
+status
+{
+    0 = deleted,
+    1 = published
+}
+
+Order (code gak usah):
+{
+    created_date
+}
+
+Filter (code masuk sini):
+{
+    q (content), status, category, type
+}
+
+Extra Condition:
+{
+    category = integer (default)
+    type = integer (default)
+    content = huruf kecil semua
+    status = integer (default)
+}
+
+==============================================
+## Kota ##
+Code:
+status
+{
+    0 = deleted,
+    1 = published
+}
+
+Order (code gak usah):
+{
+    kota, price, created_date
+}
+
+Filter (code masuk sini):
+{
+    q (kota), status
+}
+
+Extra Condition:
+{
+    id_provinsi = integer
+    kota = huruf kecil semua, cek duplicate
+    price = integer
+    status = integer (default)
+}
+
+==============================================
+## Member ##
+Code:
+idcard_type
+{
+    1 = KTP,
+	2 = SIM,
+	3 = Pasport,
+	4 = Kartu Pelajar,
+	5 = Lainnya
+}
+gender
+{
+    0 = male,
+    1 = female
+}
+marital_status
+{
+    0 = single,
+    1 = married
+}
+religion
+{
+    1 = Islam,
+    2 = Kristen,
+    3 = Katolik,
+    4 = Budha,
+    5 = Hindu,
+    6 = Kong Hu Chu,
+    7 = Lainnya
+}
+shirt_size
+{
+    0 = m,
+    1 = xl
+}
+status
+{
+    1 = Awaiting Review,
+	2 = Awaiting Transfer,
+	3 = Awaiting Approval,
+	4 = Approved,
+	5 = Invalid Data,
+	6 = Deleted
+}
+
+Order (code gak usah):
+{
+    name, email, username, idcard_number, birth_date, member_number, member_card, approved_date, created_date
+}
+
+Filter (code masuk sini):
+{
+    q (name, email, username, idcard_number, member_card), status, shirt_size, religion,
+    marital_status, gender, idcard_type
+}
+
+Extra Condition:
+{
+    id_kota = integer
+    name = huruf kecil semua, cek duplicate
+    email = huruf kecil semua, cek duplicate, cek valid
+    username = huruf kecil semua, cek duplicate
+    password = jangan dikecilin, md5
+    idcard_type = integer (default)
+    idcard_number = integer, cek duplicate
+    idcard_photo = huruf kecil semua
+    idcard_address = huruf kecil semua
+    shipment_address = huruf kecil semua
+    postal_code = integer
+    gender = integer (default)
+    phone_number = integer, cek duplicate
+    birth_place = huruf kecil semua
+    birth_date = trim aja
+    marital_status = integer (default)
+    occupation = huruf kecil semua
+    religion = integer (default)
+    shirt_size = integer (default)
+    photo = huruf kecil semua
+    status = integer (default)
+    member_number = integer (berurutan) // update
+    member_card = huruf besar // update
+}
+
+==============================================
+## Member Transfer ##
+Code:
+type
+{
+    1 = membership,
+    2 = merchandise
+}
+status
+{
+    0 = ordered,
+    1 = paid
+}
+
+Order (code gak usah):
+{
+    total, date, created_date
+}
+
+Filter (code masuk sini):
+{
+    q (total), type
+}
+
+Extra Condition:
+{
+    id_member = integer
+    total = integer
+    date = trim aja
+    photo = huruf kecil semua
+    account_name = huruf kecil semua
+    other_information = huruf kecil semua
+    type = integer (default)
+}
+
+==============================================
+## Nav Menu ##
+Code:
+type
+{
+    1 = sidebar,
+    2 = parent,
+    3 = child
+}
+status
+{
+    0 = hidden,
+    1 = show
+}
+
+Order (code gak usah):
+{
+    parent_name, title, menu_order, created_date
+}
+
+Filter (code masuk sini):
+{
+    q (parent_name, title), type, status
+}
+
+Extra Condition:
+{
+    parent_name = huruf kecil semua
+    title = huruf kecil semua, cek duplicate
+    url = huruf kecil semua
+    type = integer (default)
+    icon = huruf kecil semua
+    description = huruf kecil semua
+    status = integer (default)
+    menu_order = integer
+}
+
+==============================================
+## Nav User ##
+Code:
+admin_role
+{
+    1 = admin
+}
+
+Order (code gak usah):
+{
+    created_date
+}
+
+Extra Condition:
+{
+    id_nav_menu = integer
+    admin_role = integer (default)
+}
+
+==============================================
+## Post ##
+Code:
+media_type
+{
+    1 = video,
+    2 = image
+}
+type
+{
+    1 = blog,
+    2 = news
+}
+status
+{
+    1 = published,
+    2 = draft,
+    3 = deleted
+}
+is_event
+{
+    0 = no,
+    1 = yes
+}
+
+Order (code gak usah):
+{
+    title, created_date
+}
+
+Filter (code masuk sini):
+{
+    q (title), status, media_type, type, status
+}
+
+Extra Condition:
+{
+    title = huruf kecil semua, cek duplicate
+    slug = url_title dari title, cek duplicate
+    content = huruf kecil semua
+    media = huruf kecil semua
+    media_type = integer (default)
+    type = integer (default)
+    status = integer (default)
+    is_event = integer (default)
+}
+
+==============================================
+## Post Archived ##
+Order (code gak usah):
+{
+    year, month, created_date
+}
+
+Extra Condition:
+{
+    id_post = integer
+    year = integer
+    month = integer
+}
+
+==============================================
+## Provinsi ##
+Order (code gak usah):
+{
+    provinsi, created_date
+}
+
+Filter (code masuk sini):
+{
+    q (provinsi)
+}
+
+Extra Condition:
+{
+    provinsi = huruf kecil semua, cek duplicate
+}
+
+==============================================
+## Urutan Reindex ##
+1. Admin
+2. Post
+3. Post Archived
+4. Events
+5. FAQ
+6. Provinsi
+7. Kota
+8. Nav Menu
+9. Nav User
+10. Member
+11. Member Transfer
