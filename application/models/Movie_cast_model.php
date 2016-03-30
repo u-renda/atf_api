@@ -48,7 +48,7 @@ class Movie_cast_model extends CI_Model {
         $where = array();
         if (isset($param['id_movie']) == TRUE)
         {
-            $where += array('id_movie' => $param['id_movie']);
+            $where += array($this->table.'.id_movie' => $param['id_movie']);
         }
         
         $this->db->select('id_movie_cast, '.$this->table.'.id_movie, actor, cast,

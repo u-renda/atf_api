@@ -254,6 +254,11 @@ class Movie_cast extends REST_Controller {
 		
 		$param = array();
 		$param2 = array();
+		if ($id_movie == TRUE)
+		{
+			$param['id_movie'] = $id_movie;
+			$param2['id_movie'] = $id_movie;
+		}
 		
 		$param['limit'] = $limit;
 		$param['offset'] = $offset;
