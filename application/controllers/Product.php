@@ -23,10 +23,10 @@ class Product extends REST_Controller {
 		$id_product_brand = filter($this->post('id_product_brand'));
 		$name = filter(trim($this->post('name')));
 		$photo = filter(trim($this->post('photo')));
-		$price = filter(trim($this->post('price')));
-		$matched = filter(trim($this->post('matched')));
+		$price = filter(trim(intval($this->post('price'))));
+		$matched = filter(trim(intval($this->post('matched'))));
 		$url = filter(trim($this->post('url')));
-		$status = filter(trim($this->post('status')));
+		$status = filter(trim(intval($this->post('status'))));
 		
 		$data = array();
 		if ($id_movie == FALSE)
@@ -64,7 +64,7 @@ class Product extends REST_Controller {
 			$code = 400;
 		}
 		
-		if ($price == FALSE)
+		if (isset($price) == FALSE)
 		{
 			$data['price'] = 'required';
 			$validation = 'error';
@@ -389,10 +389,10 @@ class Product extends REST_Controller {
 		$id_product_brand = filter($this->post('id_product_brand'));
 		$name = filter(trim($this->post('name')));
 		$photo = filter(trim($this->post('photo')));
-		$price = filter(trim($this->post('price')));
-		$matched = filter(trim($this->post('matched')));
+		$price = filter(trim(intval($this->post('price'))));
+		$matched = filter(trim(intval($this->post('matched'))));
 		$url = filter(trim($this->post('url')));
-		$status = filter(trim($this->post('status')));
+		$status = filter(trim(intval($this->post('status'))));
 		
 		$data = array();
 		if ($id_product == FALSE)
@@ -434,12 +434,12 @@ class Product extends REST_Controller {
 					$param['photo'] = $photo;
 				}
 				
-				if ($price == TRUE)
+				if (isset($price) == TRUE)
 				{
 					$param['price'] = $price;
 				}
 				
-				if ($matched == TRUE)
+				if (isset($matched) == TRUE)
 				{
 					$param['matched'] = $matched;
 				}
@@ -449,7 +449,7 @@ class Product extends REST_Controller {
 					$param['url'] = $url;
 				}
 				
-				if ($status == TRUE)
+				if (isset($status) == TRUE)
 				{
 					$param['status'] = $status;
 				}

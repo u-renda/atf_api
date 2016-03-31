@@ -198,6 +198,8 @@ class Member_wishlist extends REST_Controller {
 		$limit = filter(trim(intval($this->get('limit'))));
 		$order = filter(trim(strtolower($this->get('order'))));
 		$sort = filter(trim(strtolower($this->get('sort'))));
+		$id_member = filter($this->get('id_member'));
+		$id_product = filter($this->get('id_product'));
 		
 		if ($limit == TRUE && $limit < 20)
 		{
@@ -241,6 +243,16 @@ class Member_wishlist extends REST_Controller {
 		
 		$param = array();
 		$param2 = array();
+		if ($id_member == TRUE)
+		{
+			$param['id_member'] = $id_member;
+			$param2['id_member'] = $id_member;
+		}
+		if ($id_product == TRUE)
+		{
+			$param['id_product'] = $id_product;
+			$param2['id_product'] = $id_product;
+		}
 		
 		$param['limit'] = $limit;
 		$param['offset'] = $offset;
@@ -257,10 +269,16 @@ class Member_wishlist extends REST_Controller {
 			{
 				$data[] = array(
 					'id_member_wishlist' => $row->id_member_wishlist,
-					'id_member' => $row->id_member,
-					'id_product' => $row->id_product,
 					'created_date' => $row->created_date,
-					'updated_date' => $row->updated_date
+					'updated_date' => $row->updated_date,
+					'member' => array(
+						'id_member' => $row->id_member,
+						'name' => $row->member_name
+					),
+					'product' => array(
+						'id_product' => $row->id_product,
+						'name' => $row->product_name
+					)
 				);
 			}
 		}

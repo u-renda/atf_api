@@ -46,7 +46,7 @@ class Member extends REST_Controller {
 			$code = 400;
 		}
 		
-		if ($gender == FALSE)
+		if (isset($gender) == FALSE)
 		{
 			$data['gender'] = 'required';
 			$validation = 'error';
@@ -421,7 +421,7 @@ class Member extends REST_Controller {
 					// bisa tambahin kirim email konfirmasi karena ganti email
 				}
 				
-				if ($gender == TRUE)
+				if (isset($gender) == TRUE)
 				{
 					$param['gender'] = $gender;
 				}
@@ -431,7 +431,7 @@ class Member extends REST_Controller {
 					$param['birthday'] = $birthday;
 				}
 				
-				if ($status == TRUE)
+				if (isset($status) == TRUE)
 				{
 					$param['status'] = $status;
 				}

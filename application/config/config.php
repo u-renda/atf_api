@@ -509,6 +509,7 @@ $config['default_admin_order'] = array('created_date', 'name', 'username');
 $config['default_admin_role'] = array('1', '2');
 $config['default_admin_status'] = array('0', '1');
 $config['default_member_gender'] = array('0', '1');
+$config['default_member_love_order'] = array('created_date');
 $config['default_member_order'] = array('name', 'created_date');
 $config['default_member_status'] = array('0', '1');
 $config['default_member_wishlist_order'] = array('created_date');

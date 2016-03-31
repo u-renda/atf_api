@@ -339,7 +339,7 @@ class Movie extends REST_Controller {
 					$param['photo'] = $photo;
 				}
 				
-				if ($status == TRUE)
+				if (isset($status) == TRUE)
 				{
 					$param['status'] = $status;
 				}

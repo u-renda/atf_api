@@ -47,9 +47,21 @@ class Member_wishlist_model extends CI_Model {
     function lists($param)
     {
         $where = array();
+		if (isset($param['id_member']) == TRUE)
+        {
+            $where += array($this->table.'.id_member' => $param['id_member']);
+        }
+		if (isset($param['id_product']) == TRUE)
+        {
+            $where += array($this->table.'.id_product' => $param['id_product']);
+        }
         
-        $this->db->select('id_member_wishlist, id_member, id_product, created_date, updated_date');
+        $this->db->select('id_member_wishlist, '.$this->table.'.id_member, '.$this->table.'.id_product,
+						  '.$this->table.'.created_date, '.$this->table.'.updated_date,
+						  member.name as member_name, product.name as product_name');
         $this->db->from($this->table);
+        $this->db->join('member', $this->table.'.id_member = member.id_member');
+        $this->db->join('product', $this->table.'.id_product = product.id_product');
         $this->db->where($where);
         $this->db->order_by($param['order'], $param['sort']);
         $this->db->limit($param['limit'], $param['offset']);
@@ -60,6 +72,14 @@ class Member_wishlist_model extends CI_Model {
     function lists_count($param)
     {
         $where = array();
+		if (isset($param['id_member']) == TRUE)
+        {
+            $where += array('id_member' => $param['id_member']);
+        }
+		if (isset($param['id_product']) == TRUE)
+        {
+            $where += array('id_product' => $param['id_product']);
+        }
         
         $this->db->select($this->table_id);
         $this->db->from($this->table);

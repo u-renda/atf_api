@@ -364,7 +364,7 @@ class Product_flag extends REST_Controller {
 					$param['name'] = $name;
 				}
 				
-				if ($status == TRUE)
+				if (isset($status) == TRUE)
 				{
 					$param['status'] = $status;
 				}

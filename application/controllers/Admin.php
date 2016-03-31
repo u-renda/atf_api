@@ -54,7 +54,7 @@ class Admin extends REST_Controller {
 			$code = 400;
 		}
 		
-		if ($admin_role == FALSE)
+		if (isset($admin_role) == FALSE)
 		{
 			$data['admin_role'] = 'required';
 			$validation = 'error';
@@ -462,7 +462,7 @@ class Admin extends REST_Controller {
 					// bisa tambahin kirim email konfirmasi karena ganti email
 				}
 				
-				if ($admin_role == TRUE)
+				if (isset($admin_role) == TRUE)
 				{
 					$param['admin_role'] = $admin_role;
 				}
@@ -472,7 +472,7 @@ class Admin extends REST_Controller {
 					$param['photo'] = $photo;
 				}
 				
-				if ($status == TRUE)
+				if (isset($status) == TRUE)
 				{
 					$param['status'] = $status;
 				}
