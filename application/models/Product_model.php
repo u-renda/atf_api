@@ -32,14 +32,18 @@ class Product_model extends CI_Model {
             $where += array('id_product' => $param['id_product']);
         }
         
-        $this->db->select('id_product, id_product_subcategory, '.$this->table.'.id_movie,
-						  '.$this->table.'.id_product_brand, '.$this->table.'.name,
-						  '.$this->table.'.photo, price, matched, url, '.$this->table.'.status,
-						  '.$this->table.'.created_date, '.$this->table.'.updated_date, title,
-						  movie.photo as movie_photo, product_brand.name as product_brand_name');
+        $this->db->select('id_product, '.$this->table.'.id_product_subcategory,
+						  '.$this->table.'.id_movie_cast, '.$this->table.'.id_product_brand,
+						  '.$this->table.'.name, '.$this->table.'.photo, price, matched, url,
+						  '.$this->table.'.status, '.$this->table.'.created_date,
+						  '.$this->table.'.updated_date, movie_cast.cast as movie_cast_cast,
+						  movie_cast.actor as movie_cast_actor, movie_cast.photo as movie_cast_photo,
+						  product_brand.name as product_brand_name,
+						  product_subcategory.name as product_subcategory_name');
         $this->db->from($this->table);
-        $this->db->join('movie', $this->table.'.id_movie = movie.id_movie');
+        $this->db->join('movie_cast', $this->table.'.id_movie_cast = movie_cast.id_movie_cast');
         $this->db->join('product_brand', $this->table.'.id_product_brand = product_brand.id_product_brand');
+		$this->db->join('product_subcategory', $this->table.'.id_product_subcategory = product_subcategory.id_product_subcategory');
         $this->db->where($where);
         $query = $this->db->get();
         return $query;
@@ -54,16 +58,17 @@ class Product_model extends CI_Model {
         }
         
         $this->db->select('id_product, '.$this->table.'.id_product_subcategory,
-						  '.$this->table.'.id_movie, '.$this->table.'.id_product_brand,
+						  '.$this->table.'.id_movie_cast, '.$this->table.'.id_product_brand,
 						  '.$this->table.'.name, '.$this->table.'.photo, price, matched, url,
 						  '.$this->table.'.status, '.$this->table.'.created_date,
-						  '.$this->table.'.updated_date, title, movie.photo as movie_photo,
+						  '.$this->table.'.updated_date, movie_cast.cast as movie_cast_cast,
+						  movie_cast.actor as movie_cast_actor,
 						  product_brand.name as product_brand_name,
 						  product_subcategory.name as product_subcategory_name');
         $this->db->from($this->table);
-        $this->db->join('movie', $this->table.'.id_movie = movie.id_movie');
-        $this->db->join('product_brand', $this->table.'.id_product_brand= product_brand.id_product_brand');
-        $this->db->join('product_subcategory', $this->table.'.id_product_subcategory= product_subcategory.id_product_subcategory');
+        $this->db->join('movie_cast', $this->table.'.id_movie_cast = movie_cast.id_movie_cast');
+        $this->db->join('product_brand', $this->table.'.id_product_brand = product_brand.id_product_brand');
+        $this->db->join('product_subcategory', $this->table.'.id_product_subcategory = product_subcategory.id_product_subcategory');
         $this->db->where($where);
         $this->db->order_by($param['order'], $param['sort']);
         $this->db->limit($param['limit'], $param['offset']);

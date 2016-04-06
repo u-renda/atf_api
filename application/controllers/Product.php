@@ -9,6 +9,7 @@ class Product extends REST_Controller {
     {
         parent::__construct();
 		$this->load->helper('fungsi');
+		$this->load->model('movie_cast_model');
 		$this->load->model('product_model', 'the_model');
 		$this->load->model('product_subcategory_model');
     }
@@ -18,7 +19,7 @@ class Product extends REST_Controller {
 		$this->benchmark->mark('code_start');
 		$validation = 'ok';
 		
-		$id_movie = filter($this->post('id_movie'));
+		$id_movie_cast = filter($this->post('id_movie_cast'));
 		$id_product_subcategory = filter($this->post('id_product_subcategory'));
 		$id_product_brand = filter($this->post('id_product_brand'));
 		$name = filter(trim($this->post('name')));
@@ -29,9 +30,9 @@ class Product extends REST_Controller {
 		$status = filter(trim(intval($this->post('status'))));
 		
 		$data = array();
-		if ($id_movie == FALSE)
+		if ($id_movie_cast == FALSE)
 		{
-			$data['id_movie'] = 'required';
+			$data['id_movie_cast'] = 'required';
 			$validation = 'error';
 			$code = 400;
 		}
@@ -64,7 +65,7 @@ class Product extends REST_Controller {
 			$code = 400;
 		}
 		
-		if (isset($price) == FALSE)
+		if ($price == FALSE)
 		{
 			$data['price'] = 'required';
 			$validation = 'error';
@@ -91,7 +92,7 @@ class Product extends REST_Controller {
 			}
 			
 			$param = array();
-			$param['id_movie'] = $id_movie;
+			$param['id_movie_cast'] = $id_movie_cast;
 			$param['id_product_brand'] = $id_product_brand;
 			$param['id_product_subcategory'] = $id_product_subcategory;
 			$param['name'] = $name;
@@ -209,9 +210,21 @@ class Product extends REST_Controller {
 			{
 				$row = $query->row();
 				
+				$get_category = $this->product_subcategory_model->info(array('id_product_subcategory' => $row->id_product_subcategory));
+				$get_movie = $this->movie_cast_model->info(array('id_movie_cast' => $row->id_movie_cast));
+				
+				if ($get_category->num_rows() > 0)
+				{
+					$category = $get_category->row();
+				}
+				
+				if ($get_movie->num_rows() > 0)
+				{
+					$movie = $get_movie->row();
+				}
+				
 				$data = array(
 					'id_product' => $row->id_product,
-					'id_product_subcategory' => $row->id_product_subcategory,
 					'name' => $row->name,
 					'photo' => $row->photo,
 					'price' => intval($row->price),
@@ -221,13 +234,26 @@ class Product extends REST_Controller {
 					'created_date' => $row->created_date,
 					'updated_date' => $row->updated_date,
 					'movie' => array(
-						'id_movie' => $row->id_movie,
-						'title' => $row->title,
-						'photo' => $row->movie_photo
+						'id_movie' => $movie->id_movie,
+						'title' => $movie->title
 					),
-					'product_brand' => array(
+					'movie_cast' => array(
+						'id_movie_cast' => $row->id_movie_cast,
+						'actor' => $row->movie_cast_actor,
+						'cast' => $row->movie_cast_cast,
+						'photo' => $row->movie_cast_photo
+					),
+					'brand' => array(
 						'id_product_brand' => $row->id_product_brand,
 						'name' => $row->product_brand_name
+					),
+					'category' => array(
+						'id_product_category' => $category->id_product_category,
+						'name' => $category->product_category_name
+					),
+					'subcategory' => array(
+						'id_product_subcategory' => $row->id_product_subcategory,
+						'name' => $row->product_subcategory_name
 					)
 				);
 				
@@ -328,10 +354,16 @@ class Product extends REST_Controller {
 			foreach ($query->result() as $row)
 			{
 				$get_category = $this->product_subcategory_model->info(array('id_product_subcategory' => $row->id_product_subcategory));
+				$get_movie = $this->movie_cast_model->info(array('id_movie_cast' => $row->id_movie_cast));
 				
 				if ($get_category->num_rows() > 0)
 				{
 					$category = $get_category->row();
+				}
+				
+				if ($get_movie->num_rows() > 0)
+				{
+					$movie = $get_movie->row();
 				}
 				
 				$data[] = array(
@@ -345,9 +377,13 @@ class Product extends REST_Controller {
 					'created_date' => $row->created_date,
 					'updated_date' => $row->updated_date,
 					'movie' => array(
-						'id_movie' => $row->id_movie,
-						'title' => $row->title,
-						'photo' => $row->movie_photo
+						'id_movie' => $movie->id_movie,
+						'title' => $movie->title
+					),
+					'movie_cast' => array(
+						'id_movie_cast' => $row->id_movie_cast,
+						'actor' => $row->movie_cast_actor,
+						'cast' => $row->movie_cast_cast
 					),
 					'brand' => array(
 						'id_product_brand' => $row->id_product_brand,
@@ -384,7 +420,7 @@ class Product extends REST_Controller {
 		$validation = 'ok';
 		
 		$id_product = filter($this->post('id_product'));
-		$id_movie = filter($this->post('id_movie'));
+		$id_movie_cast = filter($this->post('id_movie_cast'));
 		$id_product_subcategory = filter($this->post('id_product_subcategory'));
 		$id_product_brand = filter($this->post('id_product_brand'));
 		$name = filter(trim($this->post('name')));
@@ -409,9 +445,9 @@ class Product extends REST_Controller {
 			if ($query->num_rows() > 0)
 			{
 				$param = array();
-				if ($id_movie == TRUE)
+				if ($id_movie_cast == TRUE)
 				{
-					$param['id_movie'] = $id_movie;
+					$param['id_movie_cast'] = $id_movie_cast;
 				}
 				
 				if ($id_product_subcategory == TRUE)
